@@ -371,12 +371,11 @@ def main(baseline_dir, ours_dir, output):
                 if key in ['davies_bouldin', 'trajectory_smoothness', 'test_to_train_dist_mean']:
                     improvement = (baseline_val - ours_val) / \
                         baseline_val * 100
-                    better = "✓" if improvement > 0 else "✗"
+                    better = "G" if improvement > 0 else "B"
                 else:
                     improvement = (ours_val - baseline_val) / \
                         abs(baseline_val) * 100
-                    better = "✓" if improvement > 0 else "✗"
-
+                    better = "G" if improvement > 0 else "B"
                 f.write(
                     f"{key:<35} {baseline_val:<15.4f} {ours_val:<15.4f} {better} {improvement:>+6.2f}%\n")
 

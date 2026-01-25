@@ -3,15 +3,15 @@ QUANTITATIVE COMPARISON REPORT
 ============================================================
 Metric                              Baseline        Ours            Improvement    
 --------------------------------------------------------------------------------
-silhouette_env                      -0.0189         -0.0387         ✗ -104.74%
-davies_bouldin                      5.9445          6.0077          ✗  -1.06%
-calinski_harabasz                   24.6910         21.2352         ✗ -14.00%
-trajectory_smoothness               0.0728          0.1160          ✗ -59.43%
-trajectory_smoothness_std           0.0083          0.0352          ✓ +321.36%
-test_to_train_dist_mean             0.1352          0.2357          ✗ -74.40%
-test_to_train_dist_std              0.0980          0.1533          ✓ +56.45%
-train_test_overlap                  0.2500          0.2500          ✗  +0.00%
-feature_variance                    0.0008          0.0017          ✓ +121.73%
-inter_env_distance                  0.2363          0.3416          ✓ +44.58%
-avg_trajectory_length               50.0000         50.0000         ✗  +0.00%
-avg_trajectory_variance             0.0005          0.0012          ✓ +132.50%
+silhouette_env                      -0.0189         -0.0387         B -104.74%
+davies_bouldin                      5.9445          6.0077          B  -1.06%
+calinski_harabasz                   24.6910         21.2352         B -14.00%
+trajectory_smoothness               0.0728          0.1160          B -59.43%
+trajectory_smoothness_std           0.0083          0.0352          G +321.36%
+test_to_train_dist_mean             0.1385          0.2369          B -71.05%
+test_to_train_dist_std              0.0933          0.1402          G +50.21%
+train_test_overlap                  0.2500          0.2500          B  +0.00%
+feature_variance                    0.0008          0.0017          G +121.73%
+inter_env_distance                  0.2363          0.3416          G +44.58%
+avg_trajectory_length               50.0000         50.0000         B  +0.00%
+avg_trajectory_variance             0.0005          0.0012          G +132.50%

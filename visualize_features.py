@@ -125,9 +125,10 @@ def load_features(feature_path):
 @click.command()
 @click.option('--feature_dir', required=True, help='Directory containing eval_features.pkl')
 @click.option('--output', default='tsne_visualization.png', help='Output image path')
-@click.option('--perplexity', default=30, type=int, help='t-SNE perplexity')
+@click.option('--perplexity', default=100, type=int, help='t-SNE perplexity')
 @click.option('--n_samples', default=None, type=int, help='Subsample for faster computation')
 def main(feature_dir, output, perplexity, n_samples):
+    plt.rcParams.update({'font.family': 'Calibri'})
     feature_path = Path(feature_dir) / 'eval_features.pkl'
 
     if not feature_path.exists():
@@ -163,7 +164,7 @@ def main(feature_dir, output, perplexity, n_samples):
     print("\nCreating visualizations...")
 
     # 可视化
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
     # 按环境ID着色
     scatter1 = axes[0].scatter(features_2d[:, 0], features_2d[:, 1],
@@ -181,16 +182,16 @@ def main(feature_dir, output, perplexity, n_samples):
     axes[1].set_ylabel('t-SNE Dimension 2')
     plt.colorbar(scatter2, ax=axes[1], label='Timestep')
 
-    # 按train/test着色
-    is_train = np.array([p == 'train/' for p in prefixes])
-    scatter3 = axes[2].scatter(features_2d[:, 0], features_2d[:, 1],
-                               c=is_train, cmap='RdYlBu', alpha=0.6, s=10)
-    axes[2].set_title('t-SNE colored by Train/Test')
-    axes[2].set_xlabel('t-SNE Dimension 1')
-    axes[2].set_ylabel('t-SNE Dimension 2')
-    cbar = plt.colorbar(scatter3, ax=axes[2])
-    cbar.set_ticks([0, 1])
-    cbar.set_ticklabels(['Test', 'Train'])
+    # # 按train/test着色
+    # is_train = np.array([p == 'train/' for p in prefixes])
+    # scatter3 = axes[2].scatter(features_2d[:, 0], features_2d[:, 1],
+    #                            c=is_train, cmap='RdYlBu', alpha=0.6, s=10)
+    # axes[2].set_title('t-SNE colored by Train/Test')
+    # axes[2].set_xlabel('t-SNE Dimension 1')
+    # axes[2].set_ylabel('t-SNE Dimension 2')
+    # cbar = plt.colorbar(scatter3, ax=axes[2])
+    # cbar.set_ticks([0, 1])
+    # cbar.set_ticklabels(['Test', 'Train'])
 
     plt.tight_layout()
     plt.savefig(output, dpi=300, bbox_inches='tight')
