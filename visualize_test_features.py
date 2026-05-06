@@ -187,9 +187,18 @@ def load_features(feature_path):
 @click.option('--output', default='tsne_test_only.png', help='Output image path')
 @click.option('--perplexity', default=50, type=int, help='t-SNE perplexity')
 @click.option('--n_samples', default=None, type=int, help='Subsample for faster computation')
-@click.option('--colorbar_fontsize', default=8, type=int, help='Colorbar tick label font size')
+@click.option('--colorbar_fontsize', default=11, type=int, help='Colorbar tick label font size')
 @click.option('--show_env_id', is_flag=True, help='Show actual environment IDs instead of 0-49 indices')
 def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env_id):
+    plt.rcParams.update({
+        'font.family': 'Arial',
+        'font.size': 14,
+        'axes.titlesize': 16,
+        'axes.labelsize': 14,
+        'xtick.labelsize': 12,
+        'ytick.labelsize': 12,
+    })
+
     feature_path = Path(feature_dir) / 'eval_features.pkl'
 
     if not feature_path.exists():
@@ -258,9 +267,9 @@ def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env
         s=20
     )
     axes[0].set_title(f't-SNE colored by Environment Index\n(Test Set Only, {n_envs} environments)',
-                      fontsize=14, fontweight='bold')
-    axes[0].set_xlabel('t-SNE Dimension 1', fontsize=12)
-    axes[0].set_ylabel('t-SNE Dimension 2', fontsize=12)
+                      fontsize=16, fontweight='bold')
+    axes[0].set_xlabel('t-SNE Dimension 1', fontsize=14)
+    axes[0].set_ylabel('t-SNE Dimension 2', fontsize=14)
 
     # 创建colorbar - 关键修改：显示0-49的索引
     if n_envs <= 20:
@@ -268,12 +277,12 @@ def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env
         cbar1 = plt.colorbar(scatter1, ax=axes[0], ticks=np.arange(n_envs))
         if show_env_id:
             # 如果用户想看实际环境ID
-            cbar1.set_label('Environment ID', fontsize=11)
+            cbar1.set_label('Environment ID', fontsize=13)
             cbar1.ax.set_yticklabels([str(env_id) for env_id in sorted(unique_envs)],
                                      fontsize=colorbar_fontsize)
         else:
             # 默认显示0-49的索引
-            cbar1.set_label('Environment Index (0-based)', fontsize=11)
+            cbar1.set_label('Environment Index (0-based)', fontsize=13)
             cbar1.ax.set_yticklabels([str(i) for i in range(n_envs)],
                                      fontsize=colorbar_fontsize)
     else:
@@ -285,12 +294,12 @@ def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env
 
         if show_env_id:
             # 显示实际环境ID
-            cbar1.set_label('Environment ID', fontsize=11)
+            cbar1.set_label('Environment ID', fontsize=13)
             cbar1.ax.set_yticklabels([str(sorted(unique_envs)[i]) for i in tick_positions],
                                      fontsize=colorbar_fontsize)
         else:
             # 显示0-49的索引
-            cbar1.set_label('Environment Index (0-based)', fontsize=11)
+            cbar1.set_label('Environment Index (0-based)', fontsize=13)
             cbar1.ax.set_yticklabels([str(i) for i in tick_positions],
                                      fontsize=colorbar_fontsize)
 
@@ -304,7 +313,7 @@ def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env
                      transform=axes[0].transAxes,
                      verticalalignment='top',
                      bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5),
-                     fontsize=9)
+                     fontsize=11)
 
     # 2. 按时间步着色（连续渐变）
     scatter2 = axes[1].scatter(
@@ -316,12 +325,13 @@ def main(feature_dir, output, perplexity, n_samples, colorbar_fontsize, show_env
         s=20
     )
     axes[1].set_title(f't-SNE colored by Timestep\n(Test Set Only)',
-                      fontsize=14, fontweight='bold')
-    axes[1].set_xlabel('t-SNE Dimension 1', fontsize=12)
-    axes[1].set_ylabel('t-SNE Dimension 2', fontsize=12)
+                      fontsize=16, fontweight='bold')
+    axes[1].set_xlabel('t-SNE Dimension 1', fontsize=14)
+    axes[1].set_ylabel('t-SNE Dimension 2', fontsize=14)
 
     cbar2 = plt.colorbar(scatter2, ax=axes[1])
-    cbar2.set_label('Timestep', fontsize=11)
+    cbar2.set_label('Timestep', fontsize=13)
+    cbar2.ax.tick_params(labelsize=colorbar_fontsize)
 
     # 添加网格
     for ax in axes:

@@ -128,7 +128,14 @@ def load_features(feature_path):
 @click.option('--perplexity', default=100, type=int, help='t-SNE perplexity')
 @click.option('--n_samples', default=None, type=int, help='Subsample for faster computation')
 def main(feature_dir, output, perplexity, n_samples):
-    plt.rcParams.update({'font.family': 'Calibri'})
+    plt.rcParams.update({
+        'font.family': 'Arial',
+        'font.size': 14,
+        'axes.titlesize': 16,
+        'axes.labelsize': 14,
+        'xtick.labelsize': 12,
+        'ytick.labelsize': 12,
+    })
     feature_path = Path(feature_dir) / 'eval_features.pkl'
 
     if not feature_path.exists():
@@ -172,7 +179,8 @@ def main(feature_dir, output, perplexity, n_samples):
     axes[0].set_title('t-SNE colored by Environment ID')
     axes[0].set_xlabel('t-SNE Dimension 1')
     axes[0].set_ylabel('t-SNE Dimension 2')
-    plt.colorbar(scatter1, ax=axes[0], label='Environment ID')
+    cbar1 = plt.colorbar(scatter1, ax=axes[0], label='Environment ID')
+    cbar1.ax.tick_params(labelsize=12)
 
     # 按时间步着色
     scatter2 = axes[1].scatter(features_2d[:, 0], features_2d[:, 1],
@@ -180,7 +188,8 @@ def main(feature_dir, output, perplexity, n_samples):
     axes[1].set_title('t-SNE colored by Timestep')
     axes[1].set_xlabel('t-SNE Dimension 1')
     axes[1].set_ylabel('t-SNE Dimension 2')
-    plt.colorbar(scatter2, ax=axes[1], label='Timestep')
+    cbar2 = plt.colorbar(scatter2, ax=axes[1], label='Timestep')
+    cbar2.ax.tick_params(labelsize=12)
 
     # # 按train/test着色
     # is_train = np.array([p == 'train/' for p in prefixes])
